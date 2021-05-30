@@ -41,7 +41,7 @@ void main() async {
 We then create our `MyApp` widget that extends `AuthenticationBasedApp`.
 
 ```dart
-// -> myapp.dart
+// -> main.dart
 class MyApp extends AuthenticationBasedApp<EquatableUser> {
   const MyApp({Key? key}) : super(key: key);
 
@@ -65,7 +65,7 @@ class MyApp extends AuthenticationBasedApp<EquatableUser> {
 }
 ```
 
-That's it, you're done! Now you can use the package as you would use `FirebaseAuth` and login, signout, create accounts, etc.
+That's it, you're done! Now you can use `EasyAuth` as you would use `FirebaseAuth` and login, signout, create accounts, etc.
 
 Notice that we passed the `EquatableUser` class as a generic to `AuthenticationBasedApp`, let's talk about why.
 
@@ -124,9 +124,99 @@ abstract class AuthenticationRepository<T extends EquatableUser> {
 
 The only method that does **not** need to be re-implemented is `performSafeAuth(...)`. It is used to handle any errors that might be thrown by performing an authentication action.
 
+Here's an example of a `BasicFirebaseAuth`:
+
+```dart
+class BasicFirebaseAuth extends AuthenticationRepository<EquatableUser> {
+  final _firebaseAuth = FirebaseAuth.instance;
+
+  @override
+  Stream<EquatableUser> get user => _firebaseAuth.authStateChanges().map<EquatableUser>((user) {
+        if (user == null) {
+          return EquatableUser.empty;
+        } else {
+          return EquatableUser(
+            id: user.uid,
+            name: user.displayName,
+            email: user.email,
+            createdAt: user.metadata.creationTime,
+          );
+        }
+      });
+
+  @override
+  bool isUserNew(EquatableUser user) =>
+      user.createdAt?.isAfter(DateTime.now().subtract(const Duration(seconds: 5))) ?? false;
+
+  @override
+  EquatableUser get currentUser {
+    final _user = _firebaseAuth.currentUser!;
+    return EquatableUser(id: _user.uid, name: _user.displayName, email: _user.email);
+  }
+
+  @override
+  Future<void> login({required EasyAuthProvider provider}) async {
+    if (provider is EmailPasswordAuth) {
+      await _firebaseAuth.signInWithEmailAndPassword(email: provider.email, password: provider.password);
+    } else if (provider is GoogleAuth) {
+      //sign in with google
+    }
+  }
+
+  @override
+  Future<void> register({required EquatableUser user, required String password}) async {
+    if (user.email == null) throw FirebaseAuthException(code: 'no-email-registration');
+    await _firebaseAuth.createUserWithEmailAndPassword(email: user.email!, password: password);
+  }
+
+  @override
+  Future<void> signOut() => _firebaseAuth.signOut();
+
+  @override
+  Future<void> deleteAccount() => _firebaseAuth.currentUser!.delete();
+}
+```
+
+### EasyAuthProvider
+
+If you need to add more authentication providers than the pre-packaged ones, simply override the `EasyAuthProvider` class.
+
 ### EasyAuth Widgets
 
 #### AuthenticationBasedApp
+
+**AuthenticationBasedApp** is an abstract class that you need to extend to add authentication responsiveness to your app.
+
+There are a couple of methods you need to know about:
+
+```dart
+  /// Rebuilds the state of the app every time the authentication status changes.
+  /// This is an efficient method due to `T` extending `Equatable` and
+  /// therefore only rebuilding when necessary
+  Widget buildState(BuildContext context, AuthStatus status, T user);
+```
+
+Note: this method needs to be overriden.
+
+```dart
+  /// Called when an exception relating to authentication gets thrown.
+  /// Can be overriden to provide your own custom error-handling logic (e.g. logging, custome snackbar, etc.)
+  void handleError(BuildContext context, AuthException exception) {...}
+```
+
+Note: this method has a default implementation that prints the action that was performed when the exception was thrown and displays the following `Flushbar` from [package:another_flushbar](https://pub.dev/packages/another_flushbar).
+
+```dart
+Flushbar(
+  icon: const Padding(padding: EdgeInsets.only(left: 14.0), child: Text('😱')),
+  message: exception.message,
+  backgroundColor: Theme.of(context).errorColor,
+  margin: const EdgeInsets.all(8),
+  borderRadius: BorderRadius.circular(8.0),
+  flushbarPosition: FlushbarPosition.TOP,
+  flushbarStyle: FlushbarStyle.FLOATING,
+);
+```
 
 #### EasyAuthBuilder
 

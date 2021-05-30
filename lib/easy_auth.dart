@@ -3,6 +3,7 @@ library easy_auth;
 //TODO: add README icons
 //TODO: add README title logo
 //TODO: add README gallery
+//TODO: add documentation to every public member
 export 'src/app.dart' show AuthenticationBasedApp;
 export 'src/builder.dart' show EasyAuthBuilder;
 export 'src/instance.dart' show EasyAuth;
