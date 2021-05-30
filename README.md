@@ -1,8 +1,9 @@
-<!-- <p align="center">
-<img src="https://raw.githubusercontent.com/felangel/bloc/master/docs/assets/flutter_bloc_logo_full.png" height="100" alt="Flutter Bloc Package" />
-</p> -->
+<p align="center" style="text-align: center; font-size: 4rem; font-weight: bold;">
+<!-- <img src="https://raw.githubusercontent.com/felangel/bloc/master/docs/assets/flutter_bloc_logo_full.png" height="100" alt="Flutter Bloc Package" /> -->
+EasyAuth
+</p>
+
 <p align="center">
-<a href="https://pub.dev/packages/flutter_bloc"><img src="https://img.shields.io/pub/v/flutter_bloc.svg" alt="Pub"></a>
 <a href="https://pub.dev/packages/very_good_analysis"><img src="https://img.shields.io/badge/style-very_good_analysis-B22C89.svg" alt="very good analysis"></a>
 <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/license-MIT-purple.svg" alt="License: MIT"></a>
 </p>
@@ -11,13 +12,13 @@
 
 Widgets and classes that make it easy to add authentication to any [Flutter](https://flutter.dev) app. Built on top of the [package:bloc](https://pub.dev/packages/bloc) architecture, it is fully authentication framework agnostic but provides some plug-and-play mechanisms for commonly used frameworks like [package:firebase_auth](https://pub.dev/packages/firebase_auth).
 
-⚠️ If you like this repository, I would really appreciate some help in maintaining/improving/promoting it!
+⚠️ If you like this repository, I would really appreciate some help in maintaining/improving/promoting it! I'm also listening to logo ideas
 
 ---
 
 ## Usage
 
-Lets take a look at how to integrate a basic Firebase Auth state to your app. For other examples, check the [examples]() folder
+Lets take a look at how to integrate a basic Firebase Auth state to your app. For other examples, check the [examples](https://github.com/ramseskamanda/easy_auth/tree/master/example) folder
 
 First, we create a basic MaterialApp (or any other app you might use) and initialize the default Firebase App.
 
@@ -88,6 +89,18 @@ class CustomUser extends EquatableUser {
 
 ### EasyAuth methods
 
+**EasyAuth** is a utility class that lets you statically access the methods on your `AuthenticationRepository`.
+
+```dart
+ElevatedButton(
+  child: const Text('Log in'),
+  onPressed: () {
+    final provider = EmailPasswordAuth('test@easyauth.com', 'some-password');
+    EasyAuth.login(context, provider: provider);
+  },
+)
+```
+
 ### AuthenticationRepository
 
 **AuthenticationRepository** is an abstract class that defines all the methods necessary to add a custom authentication provider.
@@ -127,35 +140,23 @@ EasyAuthBuilder(
 )
 ```
 
-## Gallery
+<!-- ## Gallery
 
 <div style="text-align: center">
-    <table>
-        <tr>
-            <td style="text-align: center">
-                <a href="https://bloclibrary.dev/#/fluttercountertutorial">
-                    <img src="https://bloclibrary.dev/assets/gifs/flutter_counter.gif" width="200"/>
-                </a>
-            </td>            
-            <td style="text-align: center">
-                <a href="https://bloclibrary.dev/#/flutterinfinitelisttutorial">
-                    <img src="https://bloclibrary.dev/assets/gifs/flutter_infinite_list.gif" width="200"/>
-                </a>
-            </td>
-            <td style="text-align: center">
-                <a href="https://bloclibrary.dev/#/flutterfirebaselogintutorial">
-                    <img src="https://bloclibrary.dev/assets/gifs/flutter_firebase_login.gif" width="200" />
-                </a>
-            </td>
-        </tr>
-    </table>
-</div>
+  <table>
+    <tr>
+      <td style="text-align: center">
+        <a href="https://bloclibrary.dev/#/fluttercountertutorial">
+          <img src="https://bloclibrary.dev/assets/gifs/flutter_counter.gif" width="200" />
+        </a>
+      </td>
+    </tr>
+  </table>
+</div> -->
 
 ## Examples
 
-- [Counter](https://bloclibrary.dev/#/fluttercountertutorial) - an example of how to create a `CounterBloc` to implement the classic Flutter Counter app.
-- [Form Validation](https://github.com/felangel/bloc/tree/master/examples/flutter_form_validation) - an example of how to use the `bloc` and `flutter_bloc` packages to implement form validation.
-- [Bloc with Stream](https://github.com/felangel/bloc/tree/master/examples/flutter_bloc_with_stream) - an example of how to hook up a `bloc` to a `Stream` and update the UI in response to data from the `Stream`.
+- [Basic Valid/Invalid Authentication](https://github.com/ramseskamanda/easy_auth/tree/master/example) - an example of how to create a basic authentication system in any Flutter app.
 
 ## Dart Versions
 
@@ -164,4 +165,4 @@ EasyAuthBuilder(
 
 ## Maintainers
 
-- [Felix Angelov](https://github.com/felangel)
+- [Ramses Kamanda](https://github.com/ramseskamanda)
