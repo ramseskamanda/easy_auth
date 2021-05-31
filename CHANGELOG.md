@@ -1,3 +1,7 @@
+## 0.1.2
+
+Fix missing event propagation when listening to `AuthenticationRepository.user` `Stream<T>`.
+
 ## 0.1.1
 
 Moved `AuthenticationRepository.currentUser` to `EasyAuthBloc.currentUser`, not a breaking change, but fixes the unreliability of the previous architecture.

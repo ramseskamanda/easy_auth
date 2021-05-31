@@ -11,12 +11,15 @@ import 'package:very_good_analysis/very_good_analysis.dart';
 class EasyAuthBloc<T extends EquatableUser> extends Bloc<AppEvent, AppState> {
   EasyAuthBloc({required AuthenticationRepository<T> authenticationRepository})
       : _authenticationRepository = authenticationRepository,
-        super(const AppState.uninitialized());
+        super(const AppState.uninitialized()) {
+    _stream = _authenticationRepository.user.shareValue();
+    _userSubscription = _stream.listen((u) => add(AppUserChanged(u)));
+  }
 
   final AuthenticationRepository<T> _authenticationRepository;
 
-  late final ValueStream<T> _stream = _authenticationRepository.user.shareValue();
-  late final StreamSubscription<T> _userSubscription = _stream.listen((u) => AppUserChanged(u));
+  late final ValueStream<T> _stream;
+  late final StreamSubscription<T> _userSubscription;
 
   AuthenticationRepository<T> get repository => _authenticationRepository;
 
@@ -28,6 +31,12 @@ class EasyAuthBloc<T extends EquatableUser> extends Bloc<AppEvent, AppState> {
     } on ValueStreamError {
       return EquatableUser.empty as T;
     }
+  }
+
+  @override
+  void onEvent(AppEvent event) {
+    super.onEvent(event);
+    print(event);
   }
 
   @override

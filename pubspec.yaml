@@ -1,6 +1,6 @@
 name: easy_auth
 description: Widgets and classes that make it easy to add authentication to any Flutter app
-version: 0.1.1
+version: 0.1.2
 homepage: https://github.com/ramseskamanda/easy_auth
 repository: https://github.com/ramseskamanda/easy_auth
 issue_tracker: https://github.com/ramseskamanda/easy_auth/issues

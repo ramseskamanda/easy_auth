@@ -45,6 +45,6 @@ abstract class AuthenticationRepository<T extends EquatableUser> {
   /// Stream of [T] which will emit the current user when
   /// the authentication state changes.
   ///
-  /// Emits [EquatableUser.empty] if the user is not authenticated.
+  /// Should emit [EquatableUser.empty] if the user is not authenticated.
   Stream<T> get user;
 }
