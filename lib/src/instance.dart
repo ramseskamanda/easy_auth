@@ -35,6 +35,5 @@ class EasyAuth {
   static void deleteAccount(BuildContext context) => EasyAuth.of(context).add(AppUserDelete());
 
   /// Returns the current user from the AuthenticationRepository
-  static T currentUser<T extends EquatableUser>(BuildContext context) =>
-      EasyAuth.of(context).repository.currentUser as T;
+  static T currentUser<T extends EquatableUser>(BuildContext context) => EasyAuth.of(context).currentUser as T;
 }

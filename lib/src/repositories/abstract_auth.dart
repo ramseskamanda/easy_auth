@@ -42,10 +42,6 @@ abstract class AuthenticationRepository<T extends EquatableUser> {
     }
   }
 
-  /// Returns the current cached user.
-  /// Defaults to [EquatableUser.empty] if there is no cached user.
-  T get currentUser;
-
   /// Stream of [T] which will emit the current user when
   /// the authentication state changes.
   ///

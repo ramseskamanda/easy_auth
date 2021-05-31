@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:rxdart/rxdart.dart';
 import 'package:bloc/bloc.dart';
 import 'package:easy_auth/easy_auth.dart';
 import 'package:easy_auth/src/models/auth_events.dart';
@@ -10,16 +11,24 @@ import 'package:very_good_analysis/very_good_analysis.dart';
 class EasyAuthBloc<T extends EquatableUser> extends Bloc<AppEvent, AppState> {
   EasyAuthBloc({required AuthenticationRepository<T> authenticationRepository})
       : _authenticationRepository = authenticationRepository,
-        super(const AppState.uninitialized()) {
-    _userSubscription = _authenticationRepository.user.listen(_onUserChanged);
-  }
+        super(const AppState.uninitialized());
 
   final AuthenticationRepository<T> _authenticationRepository;
-  late final StreamSubscription<T> _userSubscription;
+
+  late final ValueStream<T> _stream = _authenticationRepository.user.shareValue();
+  late final StreamSubscription<T> _userSubscription = _stream.listen((u) => AppUserChanged(u));
 
   AuthenticationRepository<T> get repository => _authenticationRepository;
 
-  void _onUserChanged(T user) => add(AppUserChanged(user));
+  /// Returns the current cached user.
+  /// Defaults to [EquatableUser.empty] if there is no cached user.
+  T get currentUser {
+    try {
+      return _stream.value;
+    } on ValueStreamError {
+      return EquatableUser.empty as T;
+    }
+  }
 
   @override
   Stream<AppState> mapEventToState(AppEvent event) async* {
@@ -50,14 +59,14 @@ class EasyAuthBloc<T extends EquatableUser> extends Bloc<AppEvent, AppState> {
     } else if (event is AppSignOutRequested) {
       unawaited(_authenticationRepository.performSafeAuth(_authenticationRepository.signOut(), AuthAction.signOut));
     } else if (event is AppUserGraduate) {
-      yield AppState.authenticated(_authenticationRepository.currentUser);
+      yield AppState.authenticated(currentUser);
     } else if (event is AppUserDelete) {
       yield const AppState.unauthenticated();
       final _action = _authenticationRepository.deleteAccount();
       final _error = await _authenticationRepository.performSafeAuth(_action, AuthAction.deleteAccount);
       if (_error != null) {
         yield AppState.unauthenticated(error: _error);
-        if (_authenticationRepository.currentUser != EquatableUser.empty) {
+        if (currentUser != EquatableUser.empty) {
           unawaited(_authenticationRepository.performSafeAuth(_authenticationRepository.signOut(), AuthAction.signOut));
         }
       }

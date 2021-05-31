@@ -24,12 +24,6 @@ class BasicFirebaseAuth extends AuthenticationRepository<EquatableUser> {
       user.createdAt?.isAfter(DateTime.now().subtract(const Duration(seconds: 5))) ?? false;
 
   @override
-  EquatableUser get currentUser {
-    final _user = _firebaseAuth.currentUser!;
-    return EquatableUser(id: _user.uid, name: _user.displayName, email: _user.email);
-  }
-
-  @override
   Future<void> login({required EasyAuthProvider provider}) async {
     if (provider is EmailPasswordAuth) {
       await _firebaseAuth.signInWithEmailAndPassword(email: provider.email, password: provider.password);

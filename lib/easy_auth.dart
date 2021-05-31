@@ -4,6 +4,7 @@ library easy_auth;
 //TODO: add README title logo
 //TODO: add README gallery
 //TODO: add documentation to every public member
+//TODO: make the currentUser take the latest value off the stream instead of asking the user to override it
 export 'src/app.dart' show AuthenticationBasedApp;
 export 'src/builder.dart' show EasyAuthBuilder;
 export 'src/instance.dart' show EasyAuth;

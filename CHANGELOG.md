@@ -1,4 +1,8 @@
-# 0.1.0
+## 0.1.1
+
+Moved `AuthenticationRepository.currentUser` to `EasyAuthBloc.currentUser`, not a breaking change, but fixes the unreliability of the previous architecture.
+
+## 0.1.0
 
 Initial version of the library.
 
