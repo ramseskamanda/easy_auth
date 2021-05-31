@@ -8,7 +8,8 @@ import 'package:flutter/material.dart';
 abstract class EquatableUser extends Equatable {
   /// {@macro user}
   @mustCallSuper
-  const EquatableUser({required this.id, required this.createdAt, this.email, this.username});
+  const EquatableUser(
+      {required this.id, required this.createdAt, this.email, this.username});
 
   /// The current user's creation time
   final DateTime createdAt;

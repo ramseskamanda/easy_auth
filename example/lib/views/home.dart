@@ -27,17 +27,20 @@ class HomeView extends StatelessWidget {
             if (newAccount)
               ElevatedButton(
                 onPressed: () => EasyAuth.graduateUser<UserData>(context),
-                style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.yellow)),
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.yellow)),
                 child: const Text('Graduate user from new account'),
               ),
             ElevatedButton(
               onPressed: () => EasyAuth.signOut<UserData>(context),
-              style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.red)),
+              style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Colors.red)),
               child: const Text('Sign out'),
             ),
             ElevatedButton(
               onPressed: () => EasyAuth.deleteAccount<UserData>(context),
-              style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.red)),
+              style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Colors.red)),
               child: const Text('Delete account'),
             ),
           ],

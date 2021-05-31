@@ -1,3 +1,7 @@
+## 0.1.4
+
+Formatted files with `dartfmt -w .`
+
 ## 0.1.3
 
 Fix type references across the code base, thus allowing for more custom user types extends `EquatableUser`.

@@ -8,10 +8,14 @@ class AppState<T extends EquatableUser> extends Equatable {
     this.error,
   });
 
-  const AppState.authenticated(T user) : this._(status: AuthStatus.authenticated, user: user);
-  const AppState.newAccount(T user) : this._(status: AuthStatus.newAccount, user: user);
-  const AppState.authenticating() : this._(status: AuthStatus.authenticating, user: null);
-  const AppState.uninitialized() : this._(status: AuthStatus.uninitialized, user: null);
+  const AppState.authenticated(T user)
+      : this._(status: AuthStatus.authenticated, user: user);
+  const AppState.newAccount(T user)
+      : this._(status: AuthStatus.newAccount, user: user);
+  const AppState.authenticating()
+      : this._(status: AuthStatus.authenticating, user: null);
+  const AppState.uninitialized()
+      : this._(status: AuthStatus.uninitialized, user: null);
   const AppState.unauthenticated({AuthException? error})
       : this._(status: AuthStatus.unauthenticated, user: null, error: error);
 

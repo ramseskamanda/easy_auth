@@ -6,7 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 /// The root of this package
-abstract class AuthenticationBasedApp<T extends EquatableUser> extends StatelessWidget {
+abstract class AuthenticationBasedApp<T extends EquatableUser>
+    extends StatelessWidget {
   /// The root of this package
   const AuthenticationBasedApp({Key? key}) : super(key: key);
 
@@ -24,7 +25,8 @@ abstract class AuthenticationBasedApp<T extends EquatableUser> extends Stateless
     // ignore: avoid_print
     print('Tried performing ${exception.action} and received an exception.');
     Flushbar(
-      icon: const Padding(padding: EdgeInsets.only(left: 14.0), child: Text('😱')),
+      icon: const Padding(
+          padding: EdgeInsets.only(left: 14.0), child: Text('😱')),
       message: exception.message,
       backgroundColor: Theme.of(context).errorColor,
       margin: const EdgeInsets.all(8),
@@ -46,7 +48,8 @@ abstract class AuthenticationBasedApp<T extends EquatableUser> extends Stateless
             handleError(context, state.error!);
           }
         },
-        builder: (context, state) => buildState(context, state.status, state.user),
+        builder: (context, state) =>
+            buildState(context, state.status, state.user),
       ),
     );
   }

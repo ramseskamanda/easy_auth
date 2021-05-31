@@ -30,7 +30,8 @@ abstract class AuthenticationRepository<T extends EquatableUser> {
 
   /// Only override if you know what you're doing and want custom error handling
   /// or the error handling here does not fit your use case
-  Future<AuthException?> performSafeAuth(Future<void> future, AuthAction action) async {
+  Future<AuthException?> performSafeAuth(
+      Future<void> future, AuthAction action) async {
     try {
       await future;
     } on FirebaseAuthException catch (e) {

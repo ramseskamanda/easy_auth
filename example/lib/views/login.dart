@@ -18,10 +18,13 @@ class LoginView extends StatelessWidget {
           children: [
             ElevatedButton(
               onPressed: () {
-                final user = UserData('1-1-1970', DateTime.now(), 'test@easyauth.com');
-                EasyAuth.register<UserData>(context, user: user, password: '123456');
+                final user =
+                    UserData('1-1-1970', DateTime.now(), 'test@easyauth.com');
+                EasyAuth.register<UserData>(context,
+                    user: user, password: '123456');
               },
-              style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.blue)),
+              style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Colors.blue)),
               child: EasyAuthBuilder<UserData>(builder: (context, status) {
                 if (status == AuthStatus.authenticating) {
                   return const CupertinoActivityIndicator();
@@ -30,9 +33,11 @@ class LoginView extends StatelessWidget {
               }),
             ),
             ElevatedButton(
-              onPressed: () =>
-                  EasyAuth.login<UserData>(context, provider: const EmailPasswordAuth('test@easyauth.com', '123456')),
-              style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.green)),
+              onPressed: () => EasyAuth.login<UserData>(context,
+                  provider:
+                      const EmailPasswordAuth('test@easyauth.com', '123456')),
+              style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Colors.green)),
               child: EasyAuthBuilder<UserData>(builder: (context, status) {
                 if (status == AuthStatus.authenticating) {
                   return const CupertinoActivityIndicator();
@@ -42,8 +47,10 @@ class LoginView extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: () => EasyAuth.login<UserData>(context,
-                  provider: const EmailPasswordAuth('not-test@easyauth.com', 'notarealpassword')),
-              style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.red)),
+                  provider: const EmailPasswordAuth(
+                      'not-test@easyauth.com', 'notarealpassword')),
+              style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Colors.red)),
               child: EasyAuthBuilder<UserData>(builder: (context, status) {
                 if (status == AuthStatus.authenticating) {
                   return const CupertinoActivityIndicator();

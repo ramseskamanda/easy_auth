@@ -7,7 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 class UserData extends EquatableUser {
-  const UserData(this.birthday, DateTime createdAt, String? email) : super(id: '1', email: email, createdAt: createdAt);
+  const UserData(this.birthday, DateTime createdAt, String? email)
+      : super(id: '1', email: email, createdAt: createdAt);
 
   final String birthday;
 }
@@ -29,8 +30,9 @@ class _MyApp extends AuthenticationBasedApp<UserData> {
   const _MyApp({Key? key}) : super(key: key);
 
   @override
-  BasicFirebaseAuth<UserData> get repository =>
-      BasicFirebaseAuth<UserData>(transformer: (user) => UserData('1-1-1970', user.metadata.creationTime!, user.email));
+  BasicFirebaseAuth<UserData> get repository => BasicFirebaseAuth<UserData>(
+      transformer: (user) =>
+          UserData('1-1-1970', user.metadata.creationTime!, user.email));
 
   @override
   Widget buildState(BuildContext context, AuthStatus status, UserData? user) {

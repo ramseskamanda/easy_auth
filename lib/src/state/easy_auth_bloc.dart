@@ -8,7 +8,8 @@ import 'package:easy_auth/src/models/auth_state.dart';
 import 'package:easy_auth/src/repositories/abstract_auth.dart';
 import 'package:very_good_analysis/very_good_analysis.dart';
 
-class EasyAuthBloc<T extends EquatableUser> extends Bloc<AppEvent, AppState<T>> {
+class EasyAuthBloc<T extends EquatableUser>
+    extends Bloc<AppEvent, AppState<T>> {
   EasyAuthBloc({required AuthenticationRepository<T> authenticationRepository})
       : _authenticationRepository = authenticationRepository,
         super(AppState<T>.uninitialized()) {
@@ -48,29 +49,35 @@ class EasyAuthBloc<T extends EquatableUser> extends Bloc<AppEvent, AppState<T>> 
     } else if (event is AppLogInRequested) {
       yield AppState<T>.authenticating();
       final _action = _authenticationRepository.login(provider: event.provider);
-      final _error = await _authenticationRepository.performSafeAuth(_action, AuthAction.login);
+      final _error = await _authenticationRepository.performSafeAuth(
+          _action, AuthAction.login);
       if (_error != null) {
         yield AppState.unauthenticated(error: _error);
       }
     } else if (event is AppRegisterRequested<T>) {
       yield AppState<T>.authenticating();
-      final _action = _authenticationRepository.register(user: event.user, password: event.password);
-      final _error = await _authenticationRepository.performSafeAuth(_action, AuthAction.register);
+      final _action = _authenticationRepository.register(
+          user: event.user, password: event.password);
+      final _error = await _authenticationRepository.performSafeAuth(
+          _action, AuthAction.register);
       if (_error != null) {
         yield AppState.unauthenticated(error: _error);
       }
     } else if (event is AppSignOutRequested) {
-      unawaited(_authenticationRepository.performSafeAuth(_authenticationRepository.signOut(), AuthAction.signOut));
+      unawaited(_authenticationRepository.performSafeAuth(
+          _authenticationRepository.signOut(), AuthAction.signOut));
     } else if (event is AppUserGraduate) {
       yield AppState.authenticated(currentUser!);
     } else if (event is AppUserDelete) {
       yield AppState<T>.unauthenticated();
       final _action = _authenticationRepository.deleteAccount();
-      final _error = await _authenticationRepository.performSafeAuth(_action, AuthAction.deleteAccount);
+      final _error = await _authenticationRepository.performSafeAuth(
+          _action, AuthAction.deleteAccount);
       if (_error != null) {
         yield AppState.unauthenticated(error: _error);
         if (currentUser != null) {
-          unawaited(_authenticationRepository.performSafeAuth(_authenticationRepository.signOut(), AuthAction.signOut));
+          unawaited(_authenticationRepository.performSafeAuth(
+              _authenticationRepository.signOut(), AuthAction.signOut));
         }
       }
     }
