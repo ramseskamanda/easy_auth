@@ -11,29 +11,32 @@ class EasyAuth {
   ///
   /// Behaves very similarily to `Navigator.of` from the material.dart library
   /// or `context.read<T>` from the bloc library
-  static EasyAuthBloc of(BuildContext context) => context.read<EasyAuthBloc>();
+  static EasyAuthBloc<T> of<T extends EquatableUser>(BuildContext context) => context.read<EasyAuthBloc<T>>();
 
   /// Sends SignOut request to the `EasyAuthBloc` for the current user.
-  static void signOut(BuildContext context) => EasyAuth.of(context).add(AppSignOutRequested());
+  static void signOut<T extends EquatableUser>(BuildContext context) =>
+      EasyAuth.of<T>(context).add(AppSignOutRequested());
 
   /// Sends Login request to the `EasyAuthBloc` for the current user.
-  static void login(BuildContext context, {required EasyAuthProvider provider}) =>
-      EasyAuth.of(context).add(AppLogInRequested(provider: provider));
+  static void login<T extends EquatableUser>(BuildContext context, {required EasyAuthProvider provider}) =>
+      EasyAuth.of<T>(context).add(AppLogInRequested(provider: provider));
 
   /// Sends Register request to the `EasyAuthBloc` for the current user.
   static void register<T extends EquatableUser>(BuildContext context, {required T user, required String password}) =>
-      EasyAuth.of(context).add(AppRegisterRequested(user: user, password: password));
+      EasyAuth.of<T>(context).add(AppRegisterRequested(user: user, password: password));
 
   /// Sends Graduation request to the `EasyAuthBloc` for the current user.
   ///
   /// This means the user will not be considered a 'new' user anymore.
-  static void graduateUser(BuildContext context) => EasyAuth.of(context).add(AppUserGraduate());
+  static void graduateUser<T extends EquatableUser>(BuildContext context) =>
+      EasyAuth.of<T>(context).add(AppUserGraduate());
 
   /// Sends AuthDeleteAccount request to the `EasyAuthBloc` for the current user.
   ///
   /// ⚠️ This action deletes a user!
-  static void deleteAccount(BuildContext context) => EasyAuth.of(context).add(AppUserDelete());
+  static void deleteAccount<T extends EquatableUser>(BuildContext context) =>
+      EasyAuth.of<T>(context).add(AppUserDelete());
 
   /// Returns the current user from the AuthenticationRepository
-  static T currentUser<T extends EquatableUser>(BuildContext context) => EasyAuth.of(context).currentUser as T;
+  static T currentUser<T extends EquatableUser>(BuildContext context) => EasyAuth.of<T>(context).currentUser!;
 }

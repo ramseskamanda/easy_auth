@@ -2,26 +2,23 @@ import 'package:easy_auth/easy_auth.dart';
 import 'package:easy_auth/src/utils/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class BasicFirebaseAuth extends AuthenticationRepository<EquatableUser> {
+class BasicFirebaseAuth<T extends EquatableUser> extends AuthenticationRepository<T> {
+  BasicFirebaseAuth({required this.transformer});
+
   final _firebaseAuth = FirebaseAuth.instance;
+  final T Function(User) transformer;
 
   @override
-  Stream<EquatableUser> get user => _firebaseAuth.authStateChanges().map<EquatableUser>((user) {
+  Stream<T?> get user => _firebaseAuth.authStateChanges().map<T?>((user) {
         if (user == null) {
-          return EquatableUser.empty;
+          return null;
         } else {
-          return EquatableUser(
-            id: user.uid,
-            name: user.displayName,
-            email: user.email,
-            createdAt: user.metadata.creationTime,
-          );
+          return transformer(user);
         }
       });
 
   @override
-  bool isUserNew(EquatableUser user) =>
-      user.createdAt?.isAfter(DateTime.now().subtract(const Duration(seconds: 5))) ?? false;
+  bool isUserNew(T user) => user.createdAt.isAfter(DateTime.now().subtract(const Duration(seconds: 5)));
 
   @override
   Future<void> login({required EasyAuthProvider provider}) async {
@@ -33,7 +30,7 @@ class BasicFirebaseAuth extends AuthenticationRepository<EquatableUser> {
   }
 
   @override
-  Future<void> register({required EquatableUser user, required String password}) async {
+  Future<void> register({required T user, required String password}) async {
     if (user.email == null) throw FirebaseAuthException(code: 'no-email-registration');
     await _firebaseAuth.createUserWithEmailAndPassword(email: user.email!, password: password);
   }

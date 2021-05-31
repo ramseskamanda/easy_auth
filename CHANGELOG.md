@@ -1,3 +1,7 @@
+## 0.1.3
+
+Fix type references across the code base, thus allowing for more custom user types extends `EquatableUser`.
+
 ## 0.1.2
 
 Fix missing event propagation when listening to `AuthenticationRepository.user` `Stream<T>`.
