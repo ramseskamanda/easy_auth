@@ -1,5 +1,4 @@
 import 'package:easy_auth/easy_auth.dart';
-import 'package:easy_auth/src/utils/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class BasicFirebaseAuth<T extends EquatableUser>

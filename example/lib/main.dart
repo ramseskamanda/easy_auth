@@ -1,4 +1,5 @@
 import 'package:easy_auth/easy_auth.dart';
+import 'package:example/basic_firebase_auth.dart';
 import 'package:example/views/home.dart';
 import 'package:example/views/login.dart';
 import 'package:example/views/splash.dart';

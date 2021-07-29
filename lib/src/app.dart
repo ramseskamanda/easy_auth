@@ -1,4 +1,3 @@
-import 'package:another_flushbar/flushbar.dart';
 import 'package:easy_auth/easy_auth.dart';
 import 'package:easy_auth/src/models/auth_state.dart';
 import 'package:easy_auth/src/state/easy_auth_bloc.dart';
@@ -23,17 +22,8 @@ abstract class AuthenticationBasedApp<T extends EquatableUser>
   /// Can be overriden to provide your own custom logic (e.g. logging, custome snackbar, etc.)
   void handleError(BuildContext context, AuthException exception) {
     // ignore: avoid_print
-    print('Tried performing ${exception.action} and received an exception.');
-    Flushbar(
-      icon: const Padding(
-          padding: EdgeInsets.only(left: 14.0), child: Text('😱')),
-      message: exception.message,
-      backgroundColor: Theme.of(context).errorColor,
-      margin: const EdgeInsets.all(8),
-      borderRadius: BorderRadius.circular(8.0),
-      flushbarPosition: FlushbarPosition.TOP,
-      flushbarStyle: FlushbarStyle.FLOATING,
-    ).show(context);
+    print(
+        'Tried performing ${exception.action} and received an exception: $exception');
   }
 
   @override

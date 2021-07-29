@@ -1,3 +1,7 @@
+## 0.2.1
+
+Removed unnecassary dependencies: cloud_firestore, firebase_auth, and another_flushbar
+
 ## 0.1.4
 
 Formatted files with `dartfmt -w .`

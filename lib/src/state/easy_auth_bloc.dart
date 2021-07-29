@@ -6,7 +6,6 @@ import 'package:easy_auth/easy_auth.dart';
 import 'package:easy_auth/src/models/auth_events.dart';
 import 'package:easy_auth/src/models/auth_state.dart';
 import 'package:easy_auth/src/repositories/abstract_auth.dart';
-import 'package:very_good_analysis/very_good_analysis.dart';
 
 class EasyAuthBloc<T extends EquatableUser>
     extends Bloc<AppEvent, AppState<T>> {
@@ -64,8 +63,8 @@ class EasyAuthBloc<T extends EquatableUser>
         yield AppState.unauthenticated(error: _error);
       }
     } else if (event is AppSignOutRequested) {
-      unawaited(_authenticationRepository.performSafeAuth(
-          _authenticationRepository.signOut(), AuthAction.signOut));
+      await _authenticationRepository.performSafeAuth(
+          _authenticationRepository.signOut(), AuthAction.signOut);
     } else if (event is AppUserGraduate) {
       yield AppState.authenticated(currentUser!);
     } else if (event is AppUserDelete) {
@@ -76,8 +75,8 @@ class EasyAuthBloc<T extends EquatableUser>
       if (_error != null) {
         yield AppState.unauthenticated(error: _error);
         if (currentUser != null) {
-          unawaited(_authenticationRepository.performSafeAuth(
-              _authenticationRepository.signOut(), AuthAction.signOut));
+          await _authenticationRepository.performSafeAuth(
+              _authenticationRepository.signOut(), AuthAction.signOut);
         }
       }
     }

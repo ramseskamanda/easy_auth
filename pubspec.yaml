@@ -1,6 +1,6 @@
 name: easy_auth
 description: Widgets and classes that make it easy to add authentication to any Flutter app
-version: 0.1.4
+version: 0.2.1
 homepage: https://github.com/ramseskamanda/easy_auth
 repository: https://github.com/ramseskamanda/easy_auth
 issue_tracker: https://github.com/ramseskamanda/easy_auth/issues
@@ -19,16 +19,10 @@ dependencies:
   flutter_bloc: ^7.0.0
   equatable: ^2.0.0
 
-  very_good_analysis: ^2.1.0
-
-  firebase_core: ^1.2.0
-  cloud_firestore: ^2.2.0
-  firebase_auth: ^1.2.0
-  another_flushbar: ^1.10.22
-
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
   bloc_test: ^8.0.0
   mocktail: ^0.1.0
+  very_good_analysis: ^2.2.0

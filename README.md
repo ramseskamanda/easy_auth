@@ -13,15 +13,15 @@ EasyAuth
 
 Widgets and classes that make it easy to add authentication to any [Flutter](https://flutter.dev) app. Built on top of the [package:bloc](https://pub.dev/packages/bloc) architecture, it is fully authentication framework agnostic but provides some plug-and-play mechanisms for commonly used frameworks like [package:firebase_auth](https://pub.dev/packages/firebase_auth).
 
-⚠️ If you like this repository, I would really appreciate some help in maintaining/improving/promoting it! I'm also listening to logo ideas
+⚠️ If you like this repository, I would really appreciate some help in maintaining/improving/promoting it!
 
 ---
 
 ## Usage
 
-Lets take a look at how to integrate a basic Firebase Auth state to your app. For other examples, check the [examples](https://github.com/ramseskamanda/easy_auth/tree/master/example) folder
+Lets take a look at how to integrate a basic Firebase Auth state to your app. For other examples, check the [examples](https://github.com/ramseskamanda/easy_auth/tree/master/example) folder.
 
-First, we create a basic MaterialApp (or any other app you might use) and initialize the default Firebase App.
+First, we create a basic MaterialApp (or any other app you might use) and initialize the default Firebase App:
 
 ```dart
 // -> main.dart
@@ -39,7 +39,7 @@ void main() async {
 }
 ```
 
-We then create our `MyApp` widget that extends `AuthenticationBasedApp`.
+We then create our `MyApp` widget that extends `AuthenticationBasedApp`:
 
 ```dart
 // -> main.dart

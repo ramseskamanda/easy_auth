@@ -1,6 +1,5 @@
 import 'package:easy_auth/easy_auth.dart';
 import 'package:easy_auth/src/utils/provider.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 
 enum AuthAction {
@@ -34,12 +33,12 @@ abstract class AuthenticationRepository<T extends EquatableUser> {
       Future<void> future, AuthAction action) async {
     try {
       await future;
-    } on FirebaseAuthException catch (e) {
-      return AuthException(e.code, action);
     } on PlatformException catch (e) {
       return AuthException(e.code, action);
-    } catch (err) {
-      return AuthException(err.toString(), action);
+    } on Exception catch (e) {
+      return AuthException(e.toString(), action);
+    } catch (e) {
+      return AuthException(e.toString(), action);
     }
   }
 

@@ -12,6 +12,9 @@ dependencies:
   easy_auth:
     path: ../
 
+  firebase_auth: ^3.0.1
+  cloud_firestore: ^2.4.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
